@@ -1,0 +1,72 @@
+@if ( !this.authService.isAuthenticated()) {
+<nav class="bg-emerald-800 border-b-2 p-4 mx-auto w-full lg:w-3/4 lg:mt-4 lg:rounded-2xl text-white lg:static fixed top-0 left-0 rounded-none">
+    <div class="container mx-auto flex justify-between items-center flex-wrap">
+        <a routerLink="/homepage" class="flex items-center space-x-3 rtl:space-x-reverse hover:underline">
+            <span class="self-center text-xl font-semibold whitespace-nowrap">Home</span>
+        </a>
+        <div class="text-center order-2 lg:order-none lg:flex-grow">
+            <span class="text-2xl font-bold">HiveMind</span>
+        </div>
+        <div class="flex items-center space-x-3 order-1 lg:order-none">
+            <a routerLink="/login" class="flex items-center space-x-3 rtl:space-x-reverse hover:underline">
+                <span class="self-center text-xl font-semibold whitespace-nowrap">Login</span>
+            </a>
+            <span class="text-xl font-semibold">|</span>
+            <a routerLink="/register" class="flex items-center space-x-3 rtl:space-x-reverse hover:underline">
+                <span class="self-center text-xl font-semibold whitespace-nowrap">signUp</span>
+            </a>
+        </div>
+    </div>
+</nav>
+} @else {
+    <!--
+    <button (click)="toggleNavbar()" class="bg-emerald-800 text-white p-2 rounded-lg mt-4 ml-4">
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+        <div class="menu-icon"></div>
+      </button>
+    <nav [ngClass]="{'navbar-transition': !navbarOpen, 'show': navbarOpen}" class="absolute bg-white text-emerald-800 border-r border-emerald-800 w-64 mt-4 ml-4 transition-all duration-300 ease-in-out">
+
+      <div class="p-4">
+        <h1 class="text-2xl font-bold mb-4">Menu</h1>
+        <ul>
+            <li class="navbar-item" [ngClass]="{'show': navbarOpen}">
+              <a routerLink="/home" routerLinkActive="active" class="block p-2 rounded hover:bg-emerald-100">Home</a>
+            </li>
+            <li class="navbar-item" [ngClass]="{'show': navbarOpen}">
+              <a routerLink="/login" routerLinkActive="active" class="block p-2 rounded hover:bg-emerald-100">Login</a>
+            </li>
+            <li class="navbar-item" [ngClass]="{'show': navbarOpen}">
+              <a routerLink="/register" routerLinkActive="active" class="block p-2 rounded hover:bg-emerald-100">Register</a>
+            </li>
+          
+          </ul>
+          
+      </div>
+    </nav>
+-->
+    <!-- app.component.html -->
+
+<!-- app.component.html -->
+
+<nav class="bg-emerald-800 border-b-2 p-4 fixed top-0 left-0 w-full text-white flex justify-between items-center">
+    <!-- Bottone Logout a sinistra -->
+    <div class="flex-1 flex justify-start">
+        <button class="bg-white text-emerald-800 px-4 py-2 rounded hover:bg-emerald-700 hover:text-white transition duration-300" (click)="authService.logout()">
+            Logout
+        </button>
+    </div>
+    <!-- Scritta HiveMind centrata -->
+    <div class="flex-1 text-center">
+        <span class="text-2xl font-bold">HiveMind</span>
+    </div>
+
+    <!-- Bottone crea nuova idea -->
+    <div class="relative flex-1 flex justify-end">
+        <button (click)="newIdea()" class="bg-white text-emerald-800 px-4 py-2 rounded hover:bg-emerald-700 hover:text-white transition duration-300">
+            Nuova Idea
+        </button>
+    </div>
+</nav>
+
+}

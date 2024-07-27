@@ -1,0 +1,30 @@
+.navbar-transition {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+    transition-delay: 0.2s; /* Aggiungi un ritardo all'inizio dell'animazione */
+  }
+  
+  .navbar-item {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+  
+  .navbar-item.show {
+    opacity: 1;
+    transition-delay: 0.1s; /* Ritardo tra ogni elemento */
+    filter: blur(0); /* Rimuovi la sfocatura quando appare */
+  }
+  
+
+
+  .show {
+    max-height: 500px; /* Modifica il valore in base alla tua esigenza */
+  }
+  .menu-icon {
+    width: 30px;
+    height: 2px; /* Riduci l'altezza delle linee */
+    background-color: white;
+    margin-bottom: 5px;
+  }
+  

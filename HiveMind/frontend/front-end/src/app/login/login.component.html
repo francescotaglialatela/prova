@@ -1,0 +1,33 @@
+<!-- login.component.html -->
+
+<div class="flex justify-center items-center mt-24">
+    <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
+      <h2 class="text-3xl font-bold mb-4">Accedi</h2>
+      <form  class="space-y-6" [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+        <div>
+          <label for="username" class="block text-gray-700 font-semibold">Nome Utente</label>
+          <input type="text" formControlName="username"  id="username" name="username"  placeholder="Inserisci il tuo nome utente" class="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-emerald-500">
+          @if (submitted && loginForm.controls.username.errors) {
+            @if (loginForm.controls.username.errors['required']) {
+                <p class="form-error">Inserisci un username!</p>
+            }
+          }
+        </div>
+        <div>
+          <label for="password" class="block text-gray-700 font-semibold">Password</label>
+          <input type="password" formControlName="password"  id="password" name="password"  placeholder="••••••••" class="block w-full px-4 py-2 mt-2 border border-gray-300 rounded-lg focus:outline-none focus:border-emerald-500">
+          @if (submitted && loginForm.controls.password.errors) {
+            @if (loginForm.controls.password.errors['required']) {
+                <p class="form-error">Inserisci una password!</p>
+            }
+            @if (loginForm.controls.password.errors['minlength']) {
+                <p class="form-error">La password deve avere una lunghezza almeno di 4 caratteri</p>
+            }
+          }
+        </div>
+        <button type="submit" class="w-full bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-600 transition duration-300">Accedi</button>
+      </form>
+      <p class="mt-4 text-gray-700 text-center">Non sei ancora registrato? <a routerLink="/register" class="text-emerald-500 font-semibold hover:underline">Registrati qui</a>.</p>
+    </div>
+  </div>
+  

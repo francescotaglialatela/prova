@@ -1,0 +1,64 @@
+.post-container {
+    padding-top: 70px; /* Aggiungi un padding-top per spostare il contenuto sotto la navbar */
+  }
+  
+  /* Scrollbar styles for WebKit browsers (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* Scrollbar styles for Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+/* Apply styles to the comments container */
+.comments-container {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.like-container {
+  cursor: pointer;
+}
+
+.like-container:hover .like-icon,
+.like-container:hover .like-text {
+  color: #3182ce; /* Cambia il colore durante l'hover */
+}
+
+.like-icon {
+  width: 1rem; /* Larghezza dell'icona */
+  height: 1rem; /* Altezza dell'icona */
+  margin-right: 0.5rem; /* Spazio a destra dell'icona */
+}
+
+.like-text {
+  font-size: 0.75rem; /* Dimensione del testo */
+}
+
+.disable * {
+  pointer-events: none; /* Disabilita tutti gli eventi del mouse per gli elementi figli */
+  opacity: 0.5; /* Riduce l'opacità degli elementi figli */
+}
+
+.hovered:hover *{
+  color: white;
+  cursor: pointer;
+}

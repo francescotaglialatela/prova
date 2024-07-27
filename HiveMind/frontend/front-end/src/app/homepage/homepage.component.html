@@ -1,0 +1,67 @@
+<div class="container mx-auto w-full lg:w-3/4 lg:mt-4 lg:rounded-2xl pt-16 bg-gray-100">
+  <h1 class="text-4xl font-bold text-center my-8">Benvenuto su HiveMind</h1>
+  <p class="text-lg text-center">Questa è la tua dashboard principale dove puoi accedere a tutte le funzionalità del nostro servizio.</p>
+  <div class="flex justify-center my-10">
+    <button class="bg-emerald-800 text-white px-6 py-2 rounded-lg hover:bg-emerald-600 transition duration-300" routerLink="/login">
+      Inizia Ora
+    </button>
+  </div>
+
+  <!-- Introduzione alle Idee -->
+  <div class="text-center">
+    <p class="text-gray-800 text-lg mb-4 font-serif">
+    Qui puoi esplorare e condividere le tue idee con una community appassionata e collaborativa. Le idee sono il cuore pulsante di questa piattaforma, permettendoti di ispirare, condividere e costruire insieme agli altri membri della community.
+    </p>
+  </div>
+
+  <!-- Paragrafo indicante il post più votato della giornata -->
+<!-- Paragrafo indicante il post più votato della giornata -->
+<!-- Paragrafo indicante il post più votato della giornata -->
+<div class="text-center bg-white p-4 rounded-lg shadow-md mb-4">
+  <p class="text-lg text-gray-800 font-semibold flex items-center justify-center">
+    <svg class="w-6 h-6 mr-2 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+    </svg>
+    Idea più votata della giornata,Esegui il login per visualizzarla.
+  </p>
+</div>
+
+  <!-- Template for Post 1 -->
+   @if(this.idea !== []){
+  <div class="bg-white shadow-md rounded-lg p-4 mb-6">
+    <div class="flex justify-between items-center mb-2">
+      <div class="text-xl font-semibold text-gray-800">u/ {{ this.idea.username}}</div>
+      <div class="flex items-center text-gray-600" id="post-date">
+        <img src="assets/trofeo.png" alt="Descrizione dell'immagine" class="rounded-lg shadow-md mr-2" />
+        {{ this.idea.data }}
+      </div>
+    </div>
+    <div class="mb-2">
+      <p class="text-gray-700 font-bold " id="post-title">[{{this.idea.title}}]</p>
+    </div>
+    <div class="mb-4">
+      <p class="text-gray-700 blur-text" id="post-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet.</p>
+    </div>
+    <div class="flex justify-end space-x-4 mb-4">
+      
+      <img class="w-17 h-12 text-white px-4 py-2 rounded-lg  transition duration-300 upvote-btn hover:cursor-pointer" id="upVote" src="assets/upVote.png" (click)="handleUpVoteClick()">
+      <img class="w-17 h-12 text-white px-4 py-2 rounded-lg hover:cursor-pointer transition duration-300 upvote-btn" id="downVote" src="assets/downVote.png" (click)="handleDownVoteClick()">
+    </div>
+    <div class="border-t border-gray-200 pt-4">
+      <h2 class="text-lg font-semibold mb-2">Commenti <span class="comment-count">({{this.idea.countComment}})</span></h2>
+      <!-- Qui puoi inserire la sezione per i commenti -->
+      <!-- Esempio di commento -->
+      <div class="flex items-start mb-4">
+        <div>
+          <div class="bg-gray-100 rounded-lg p-3 mb-2">
+            <p class="text-gray-800 blur-text">Nome Utente</p>
+            <p class="text-gray-600 blur-text">Questo è un commento di esempio. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+         
+        </div>
+      </div>
+      <!-- Fine esempio di commento -->
+    </div>
+  
+  </div>
+}

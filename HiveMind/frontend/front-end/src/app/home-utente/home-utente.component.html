@@ -1,0 +1,176 @@
+
+
+@if (this.ideas.length === 0) {
+  <!-- src/app/your-component/your-component.component.html -->
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="text-center p-6 bg-white rounded-lg shadow-lg">
+    <p class="text-lg font-semibold text-gray-800">Non ci sono idee da visualizzare!</p>
+  </div>
+</div>
+
+}@else {
+
+
+<div class="flex">
+    <!-- Sidebar a sinistra con margine negativo -->
+    <div class="w-64 bg-white post-container h-2/3 sticky top-20  p-4 ">
+      <!-- Contenuto della sidebar -->
+      <div class="space-y-4  post-container">
+        <h1>Filter</h1>
+        <div class="flex items-center py-2 bg-gray-100 rounded-lg justify-between" 
+        [ngClass]="{'disable': filter === 0,'cursor-pointer': this.filter !== 0, 'cursor-not-allowed opacity-50': this.filter === 0 , 'hovered': this.filter !==0, 'hover:bg-emerald-300': this.filter!==0}"
+        (click)="filter !== 0 ? this.getIdeas() : null; this.filter=0; this.offset=10"
+        >
+          <label for="checkbox1" class="text-black ml-2 ">Controversial</label>
+          
+        </div>
+        <div class="flex items-center py-2 bg-gray-100 rounded-lg justify-between"
+        [ngClass]="{'disable': filter === 1,'cursor-pointer': this.filter !== 1, 'cursor-not-allowed opacity-50': this.filter === 1 , 'hovered': this.filter !==1, 'hover:bg-emerald-300': this.filter!==1}"
+        (click)="filter !== 1 ? this.getUnpopularIdeas() : null; this.filter=1; this.offset=10">
+          <label for="checkbox2" class="text-black ml-2 hover:cursor-pointer">Unpopular</label>
+          
+        </div>
+        <div class="flex items-center py-2 bg-gray-100 rounded-lg justify-between" 
+        [ngClass]="{'disable': filter === 2,'cursor-pointer': this.filter !== 2, 'cursor-not-allowed opacity-50': this.filter === 2 , 'hovered': this.filter !==2, 'hover:bg-emerald-300': this.filter!==2}"
+        (click)="filter !== 2 ? this.getMainstreamIdeas() : null; this.filter=2; this.offset=10">
+          <label for="checkbox3" class="text-black ml-2 hover:cursor-pointer">Mainstream</label>
+          
+        </div>
+      </div>
+    </div>
+  
+  
+  
+  <!-- Contenitore dei post -->
+  <div class="flex-1 p-6">
+    <div class="post-container" style="margin-top: 60px;">
+      <ng-container *ngFor="let idea of ideas">
+        <div class="bg-white shadow-md rounded-lg p-4 mb-6">
+          <div class="flex justify-between items-center mb-2">
+            <div class="text-xl font-semibold text-gray-800">u/{{ idea.username }}</div>
+            <div class="flex items-center text-gray-600" id="post-date">
+              <img src="assets/trofeo.png" alt="Descrizione dell'immagine" class="rounded-lg shadow-md mr-2" 
+              [ngClass]="{'invisible': this.fixed !== idea.title}"/>
+              {{ formatDate(idea.data) }}
+            </div>
+          </div>
+          <div class="mb-2">
+            <p class="text-gray-700 font-bold" id="post-title">[{{ idea.title }}]</p>
+          </div>
+          <div class="mb-4">
+            <!-- <p class="text-gray-700 blur-text" id="post-content">{{ idea.text }}</p> -->
+            <markdown [data]="idea.text" class="text-gray-700 blur-text" id="post-content"></markdown>
+          </div>
+          <div class="flex justify-end space-x-4 mb-4">
+            <div class="flex items-center">
+              <img src="assets/upVote.png" class="w-17 h-12 text-white px-4 py-2 rounded-lg  transition duration-300 upvote-btn" id="upVote"
+              [ngClass]="{'cursor-not-allowed opacity-50': this.username === idea.username, 'hover:cursor-pointer': this.username !== idea.username}"
+              (click)="this.username !== idea.username ?  updateVote(idea.title, 1): null"
+              />
+              <span class="text-gray-600">{{ formatNumber(idea.upVote) }}</span>
+            </div>
+            <div class="flex items-center">
+              <img src="assets/downVote.png" class="w-17 h-12 text-white px-4 py-2 rounded-lg hover:cursor-pointer transition duration-300 upvote-btn" id="downVote" 
+              [ngClass]="{'cursor-not-allowed opacity-50': this.username === idea.username, 'hover:cursor-pointer': this.username !== idea.username}"
+              (click)="this.username !== idea.username ?  updateVote(idea.title, 0): null"/>
+              <span class="text-gray-600">{{ formatNumber(idea.downVote) }}</span>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200 pt-4">
+            <h2 class="text-lg font-semibold mb-2">Commenti <span class="comment-count">({{ idea.commentCount }})</span></h2>
+
+            <!-- Contenitore dei commenti -->
+            <div class="mt-4" *ngIf="idea.showComments" #commentContainer>
+              <div class="flex justify-end mb-2">
+                <button class="text-xs text-gray-600 hover:underline cursor-pointer" (click)="toggleShowComments(idea)">Chiudi commenti</button>
+              </div>
+              <div class="bg-white rounded-lg shadow-md p-4 mb-4 max-h-52 overflow-y-auto">
+                <!-- Contenuto dei commenti -->
+                <div class="flex items-start mb-4" *ngFor="let comment of idea.comments">
+                  <!-- Contenitore principale del commento -->
+                  <div class="flex-1">
+                    <!-- Username dell'utente -->
+                    <div class="text-gray-800 font-semibold mb-1">{{ comment.username }}</div>
+
+                    <!-- Contenitore del testo del commento -->
+                    <div class="bg-gray-100 rounded-lg p-3 mb-2">
+                      <p class="text-gray-600">{{ comment.text }}</p>
+                    </div>
+                    
+                    <!-- Testo "Controllo che verifica che " (invisibile) -->
+                    <div *ngIf="comment.upVoteSpecial"> 
+                      <div class="text-xs text-gray-600 invisible">Piace al Creatore dell'Idea</div>
+                    </div>
+
+                    <div *ngIf="idea.username === username && !comment.upVoteSpecial && this.checkDisable(idea.comments) === true">
+                      <div 
+                        class="flex items-center like-container cursor-pointer" 
+                        (click)="toggleUpVoteSpecial(comment, idea.comments)"
+                        [ngClass]="{'invisible': comment.disable}" 
+                        [ngStyle]="{'invisible': comment.disable ? 'none' : 'auto'}"
+                      >
+                        <img 
+                          [src]="comment.upVoteSpecial ? 'assets/cuoreLike.png' : 'assets/LikeDisable.png'" 
+                          alt="Descrizione dell'immagine" 
+                          class="w-4 h-4 mr-2 like-icon" 
+                        />
+                        <div class="text-xs text-gray-600 like-text">Piace al Creatore dell'Idea</div>
+                      </div>
+                    </div>
+                    
+                    <!-- Per chi non è creatore dell'idea. -->
+                    <div *ngIf="comment.upVoteSpecial">
+                      <div class="flex items-center">
+                        <img src="assets/cuoreLike.png" alt="Descrizione dell'immagine" class="w-4 h-4 mr-2" />
+                        <div class="text-xs text-gray-600 like-text">Piace al Creatore dell'Idea</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Fine Contenuto dei commenti -->
+              </div>
+            </div>
+            <!-- Fine Contenitore dei commenti -->
+
+            <!-- Textarea per aggiungere un commento -->
+            <div class="mt-4">
+              <textarea
+                placeholder="Aggiungi un commento..."
+                rows="3"
+                class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-emerald-500 resize-none"
+                [(ngModel)]="idea.commentText"
+              ></textarea>
+              <div *ngIf="idea.commentText?.length > 150" class="text-red-500 text-sm mt-2">
+                Il commento non può superare i 150 caratteri.
+              </div>
+            </div>
+            <!-- Fine Textarea -->
+
+            <!-- Bottoni Pubblica Commento e Visualizza commenti -->
+            <div class="mt-2 flex justify-between items-center">
+              <div class="text-xs text-gray-600 hover:underline cursor-pointer" (click)="toggleShowComments(idea)">Visualizza commenti</div>
+              <button
+                class="px-4 py-2 rounded-lg transition duration-300 text-white"
+                [class.bg-emerald-500]="idea.commentText?.length <= 150"
+                [class.bg-gray-300]="idea.commentText?.length > 150"
+                [class.hover:bg-emerald-400]="idea.commentText?.length <= 150"
+                [disabled]="idea.commentText?.length > 150"
+                (click)="pubblicaCommento(idea.title, idea.commentText, username)"
+              >
+                Pubblica Commento
+              </button>
+            </div>
+            <!-- Fine Bottoni -->
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="fixed inset-0 flex items-center justify-center bg-white bg-opacity-75 z-50">
+    <img src="assets/load.gif" alt="Caricamento..." class="w-16 h-16">
+  </div>
+</div>
+}
